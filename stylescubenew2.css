@@ -1,0 +1,318 @@
+body {
+    font-family: 'Arial', sans-serif;
+    width     : 100%;
+    min-height: 100vh;
+    background-color: #ffe8e8;
+
+    background-position: 0 0;
+    background-size: cover;
+    padding-top: 96px;
+    padding-bottom: 96px;
+    overflow  : hidden;
+}
+
+:root {
+    --cube-size: 20vw;  /* Die Größe des Würfels hier ändern */
+    --cube-half: calc(var(--cube-size) / 2);
+}
+
+
+.containerwürfelbeschreibung {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border: 1px solid #ddd; /* Hier wurde die Umrandung hinzugefügt */
+    padding: 20px; /* Etwas Innenabstand, um Inhalte von der Umrandung fernzuhalten */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    /* background-image: url(https://uploads-ssl.webflow.com/62c2f0477389255adfb5d561/63a1ef52e501412c4e566080_ct-bg.png); */
+    background-color: #F2F2F2;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    align-items: center;
+}
+
+.cube-container {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    position: relative; /* Diese Zeile hinzufügen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.description-container {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.cube-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 650px; /* Die Höhe wurde angepasst, um Platz für den Schieberegler zu schaffen */
+}
+
+
+.slider-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Zentriert den Schieberegler horizontal */
+    width: 100%;
+}
+
+.feature-slider {
+    width: 50%;
+}
+
+
+/* Würfel */
+
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px;
+}
+
+.box {
+    position: relative;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    transform-style: preserve-3d;
+    transition: all 1s ease-out;
+}
+
+.side {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.front { transform: rotateY(0deg) translateZ(50px); }
+.back { transform: rotateY(180deg) translateZ(50px); }
+.left { transform: rotateY(-90deg) translateZ(50px); }
+.right { transform: rotateY(90deg) translateZ(50px); }
+.top { transform: rotateX(90deg) translateZ(50px); }
+.bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+/* Vierecke */
+.box div {
+    width: var(--cube-size);
+    height: var(--cube-size);
+    position: absolute;
+    background: #f2f2f4;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(var(--cube-size) / 4), 1fr));
+    gap: 4px;
+    padding: 4px;
+    grid-template-rows: repeat(3, calc(var(--cube-size) / 3 - 6px));
+    z-index: 5;
+    cursor: grabbing;
+}
+
+/* Würfelseitenposition*/
+.top {
+    bottom: var(--cube-half);
+    transform: rotateX(90deg);
+}
+
+.bottom {
+    top: var(--cube-half);
+    transform: rotateX(-90deg);
+}
+
+.left {
+    right: var(--cube-half);
+    transform: rotateY(-90deg)
+}
+
+.right {
+    left: var(--cube-half);
+    transform: rotateY(90deg)
+}
+
+.front {
+    transform: translateZ(var(--cube-half));
+}
+
+.back {
+    transform: translateZ(calc(-1 * var(--cube-half))) rotateY(180deg);
+}
+
+
+ .box div span {
+    -webkit-hyphens: auto;  /* Silbentrennung */
+    hyphens: auto;  /* Silbentrennung */
+    height: calc(var(--cube-size) / 3 -6px);
+    width: calc(var(--cube-size) / 3 -6px);
+    background     : var(--clr);
+    border-radius  : 0.5vw;
+    position       : relative;
+    /* z-index: -1; */
+    text-align     : center;
+    overflow       : hidden;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    color          : #fff; 
+    background-size: 100%;
+    word-break: break-word;
+    padding: 5px; /*Rahmen/Abstand um das Feld */
+    box-sizing: border-box; /*stellt sicher, dass dsa Padding innerhalb der Größe des Elements bleibt */
+    font-size: 1vw;
+
+}
+
+.box div>span::before {
+    content        : "";
+    position       : absolute;
+    top            : 50%;
+    left           : 50%;
+    transform      : translate(-50%, -50%);
+    width          : 60px;
+    height         : 60px;
+    
+    
+}
+/* Weißes Dreicke */
+/* .box div>span::after {
+    content        : "";
+    position       : absolute;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    top            : 0;
+    left           : 0;
+    background     : linear-gradient(#ffffff44 50%, transparent 50%);
+    z-index        : -1;
+    backdrop-filter: blur(2px);
+    transform      : rotate(-40deg);
+}
+*/
+
+/* Würfel Ende */
+
+/* Slider */
+.switch-container {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -150%); /* Dies positioniert den Schalter über dem Würfel */
+    z-index: 5; /* Stellt sicher, dass der Schalter über dem Würfel liegt */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+/*
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+*/
+input:checked + .slider {
+    background-color: #aa164a;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+.text-popup  {
+    font-size: 1vw !important;
+    transform: scale(3);  /* Erhöhung des translateZ Wertes */
+    position: relative;
+    background: rgba(255,255,255,0.8);
+    z-index: 10;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+    display: block;
+}
+.box div span.text-popup {
+    border-radius: 0.5vw;
+}
+
+/*Popup zoom in - zoom out*/
+.box div span:nth-child(5) {
+    
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+
+/* Design für die gesamte Liste */
+#descriptionText ul {
+    list-style-type: none; 
+    margin: 20px 0;
+    padding: 0 20px;
+    
+}
+
+#descriptionText li::before {
+    content: '';  /* Leerer Inhalt */
+    display: inline-block; 
+    width: 20px;  /* gewünschte Breite */
+    height: 20px; /* gewünschte Höhe */
+    background: url('https://uploads-ssl.webflow.com/62c2f0477389255adfb5d561/63b3db8b15f960d76820d092_ct-list-icon.svg') no-repeat center/contain; 
+    margin-right: 30px; 
+    margin-bottom: 10px;
+    margin-top: 10px;
+    vertical-align: middle; 
+}
+
+
